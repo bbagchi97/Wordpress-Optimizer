@@ -4,6 +4,8 @@ import os
 import requests
 from werkzeug.utils import secure_filename
 
+port = int(os.environ.get("PORT", 8099))
+
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Required for flashing messages
 UPLOAD_FOLDER = 'static/output'
