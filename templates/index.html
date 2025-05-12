@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flask Image Optimizer</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>Image Optimizer & WordPress Uploader</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul>
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>Choose Images:</label><br>
+        <input type="file" name="images" multiple required><br><br>
+
+        <label>Max Width:</label><br>
+        <input type="number" name="max_width" value="1200" required><br><br>
+
+        <label>Max Height:</label><br>
+        <input type="number" name="max_height" value="800" required><br><br>
+
+        <label>Quality (1-100):</label><br>
+        <input type="number" name="quality" value="85" required><br><br>
+
+        <label><input type="checkbox" name="webp"> Convert to WebP</label><br><br>
+
+        <label><input type="checkbox" name="wp_upload" id="wp_check"> Upload to WordPress</label><br>
+
+        <div id="wp_fields" style="display: none;">
+            <label>WP URL:</label><br>
+            <input type="text" name="wp_url"><br>
+
+            <label>Username:</label><br>
+            <input type="text" name="wp_user"><br>
+
+            <label>Password:</label><br>
+            <input type="password" name="wp_pass"><br>
+        </div>
+
+        <br><button type="submit">Optimize</button>
+    </form>
+
+    <script>
+        document.getElementById("wp_check").addEventListener("change", function() {
+            document.getElementById("wp_fields").style.display = this.checked ? "block" : "none";
+        });
+    </script>
+</body>
+</html>
